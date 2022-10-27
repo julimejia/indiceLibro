@@ -20,6 +20,18 @@ class pTerminos:
                     self.der.insertarElemento(nombre)
         else:
             self.nombre = nombre
+    
+    def buscar(self, nombre):
+        if nombre < self.nombre:
+            if self.izq is None:
+                return self
+            return self.izq.buscar(nombre)
+        elif nombre > self.nombre:
+            if self.der is None:
+                return self
+            return self.der.buscar(nombre)
+        else:
+            return str(self.nombre) + ' is found'
 
 class sTerminos:
     def __init__(self, nombre):
@@ -42,6 +54,7 @@ class sTerminos:
                     self.der.insertarElemento(nombre)
         else:
             self.nombre = nombre
+    
 
 class numPaginas:
     def __init__(self, numPag):
@@ -73,17 +86,7 @@ def crearsubTermino(nombre):
 def crearPaginas(numPag):
     nuevo = pTerminos(numPag)
 
-def searchBST(self, val):
-    if val < self.val:
-        if self.left is None:
-            return str(val) + " Not Found"
-        return self.left.search(val)
-    elif val > self.val:
-        if self.right is None:
-            return str(val) + " Not Found"
-        return self.right.search(val)
-    else:
-        return str(self.val) + ' is found'
+
 
 
 def printTree(node, level = 0):
@@ -100,26 +103,40 @@ def main():
   root = pTerminos("")
   root1 = pTerminos("")
   #Recorriendo las lineas del archivo
-  for i in range(len(texto)):
-    
-    cadena = texto[i]
+  for numLinea in range(len(texto)):
+    #La variable i es el número de la línea 
+
+    cadena = texto[numLinea]
 
     #Verificamos dónde se halla el primer dígito de la cadena
     digito = 0
-    for j in cadena:
+    for posInLinea in cadena:
+    #La variable j es la posicion dentro de una linea
         if(cadena[digito].isdigit()):
             break
         else:
             digito += 1
-    
-    #if i == 0:
-       # root = pTerminos(cadena[2:digito])
+
 
     primeraLetra = cadena[0].lower()
-    #Dependiendo del término con el que empize creamos un árbol
+    #Dependiendo del término con el que empiece creamos un árbol
     if(primeraLetra == 'm'):
+        #Insertarmos el nombre del término principal en un nodo de pTerminos
         nom = cadena[2:digito]
         root.insertarElemento(nom)
+
+        #Creamos el árbol de páginas para ese nodo principal
+        prinPags=root.buscar(nom)
+        cantPag = int(cadena[digito])
+        pagesTree = numPaginas(cantPag)
+        prinPags.pags = pagesTree
+        
+        #Insertamos en varios nodos las páginas de manera organizada
+        for i in range(cantPag):
+            print("Hola")
+
+    
+
 
 
   printTree(root)
