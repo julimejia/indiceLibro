@@ -31,7 +31,7 @@ class pTerminos:
                 return self
             return self.der.buscar(nombre)
         else:
-            return str(self.nombre) + ' is found'
+            return str(self.nombre)
 
 class sTerminos:
     def __init__(self, nombre):
@@ -59,19 +59,19 @@ class sTerminos:
 class numPaginas:
     def __init__(self, numPag):
         self.numPag = numPag
-        self.izquierda = None
-        self.derecha = None
+        self.izq = None
+        self.der = None
     
-    def insertarElemento(self, numPag):
+    def insertarPag(self, numPag):
         if self:
             if numPag < self.numPag:
                 if self.izq is None:
-                    self.izq = numPaginas(numPag)
+                    self.izq = pTerminos(numPag)
                 else:
                     self.izq.insertarElemento(numPag)
             elif numPag > self.numPag:
                 if self.der is None:
-                    self.der = numPaginas(numPag)
+                    self.der = pTerminos(numPag)
                 else:
                     self.der.insertarElemento(numPag)
         else:
@@ -101,7 +101,9 @@ def main():
   texto = datos.readlines()
 
   root = pTerminos("")
-  root1 = pTerminos("")
+  pags = numPaginas(0)
+  root.pags= pags
+
   #Recorriendo las lineas del archivo
   for numLinea in range(len(texto)):
     #La variable i es el número de la línea 
@@ -126,20 +128,42 @@ def main():
         root.insertarElemento(nom)
 
         #Creamos el árbol de páginas para ese nodo principal
-        prinPags=root.buscar(nom)
+     
         cantPag = int(cadena[digito])
-        pagesTree = numPaginas(cantPag)
-        prinPags.pags = pagesTree
+        #print(cantPag)
+
+        act = 0
+        next1 = 2
+
+        lineaPaginas = cadena[digito+1:len(cadena)-2]
+        print(lineaPaginas)
+
+        #Lista para guardar las páginas
+        paginasIndividuales = []
+
+        #Recorremos la linea de lectura de dos en dos para extraer el num de pag
+        
+        for digitosPag in range(0,len(lineaPaginas),2):
+               paginasIndividuales.append(lineaPaginas[act:next1])
+               act += 2
+               next1 += 2
+        
+        """for i in range(len(paginasIndividuales)):
+            print(paginasIndividuales[i])
+                #pags.insertarPag(int(cadena[digito:next]))"""
+
+        """pagesTree = numPaginas(cantPag)
+        prinPags.pags = pagesTree"""
         
         #Insertamos en varios nodos las páginas de manera organizada
-        for i in range(cantPag):
-            print("Hola")
+        #for i in range(cantPag):
+         #   print("Hola")
 
     
 
 
 
-  printTree(root)
+  #printTree(root)
   #mostrarArbol(root)
 
   datos.close()
